@@ -15,7 +15,7 @@
             }
 
             var eventData = {
-                mouseButtonMask: mouseEventData.which,
+                mouseButtonMask: mouseEventData.which
             };
 
             // associate this data with this imageId so we can render it and manipulate it
@@ -40,7 +40,7 @@
                 handleMover = cornerstoneTools.moveNewHandle;
             }
 
-            handleMover(mouseEventData, measurementData.handles.end, function() {
+            handleMover(mouseEventData, mouseToolInterface.toolType, measurementData, measurementData.handles.end, function() {
                 measurementData.active = false;
                 measurementData.invalidated = true;
                 if (cornerstoneTools.anyHandlesOutsideImage(mouseEventData, measurementData.handles)) {
@@ -85,7 +85,7 @@
           
             // if we have no tool data for this element, do nothing
             var toolData = cornerstoneTools.getToolState(eventData.element, mouseToolInterface.toolType);
-            if (toolData === undefined) {
+            if (!toolData) {
                 return;
             }
             
@@ -144,7 +144,7 @@
                         if (handle) {
                             $(element).off('CornerstoneToolsMouseMove', mouseToolInterface.mouseMoveCallback || mouseMoveCallback);
                             data.active = true;
-                            cornerstoneTools.moveHandle(eventData, handle, handleDoneMove);
+                            cornerstoneTools.moveHandle(eventData, mouseToolInterface.toolType, data, handle, handleDoneMove);
                             e.stopImmediatePropagation();
                             return false;
                         }
@@ -163,7 +163,7 @@
                         data = toolData.data[i];
                         if (mouseToolInterface.pointNearTool(element, data, coords)) {
                             $(element).off('CornerstoneToolsMouseMove', mouseToolInterface.mouseMoveCallback || mouseMoveCallback);
-                            cornerstoneTools.moveAllHandles(e, data, toolData, options, handleDoneMove);
+                            cornerstoneTools.moveAllHandles(e, data, toolData, mouseToolInterface.toolType, options, handleDoneMove);
                             e.stopImmediatePropagation();
                             return false;
                         }
@@ -206,7 +206,7 @@
         // visible, interactive and can create
         function activate(element, mouseButtonMask) {
             var eventData = {
-                mouseButtonMask: mouseButtonMask,
+                mouseButtonMask: mouseButtonMask
             };
 
             $(element).off('CornerstoneImageRendered', mouseToolInterface.onImageRendered);
@@ -230,7 +230,7 @@
         // visible, interactive
         function deactivate(element, mouseButtonMask) {
             var eventData = {
-                mouseButtonMask: mouseButtonMask,
+                mouseButtonMask: mouseButtonMask
             };
 
             $(element).off('CornerstoneImageRendered', mouseToolInterface.onImageRendered);

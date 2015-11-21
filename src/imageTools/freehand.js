@@ -82,7 +82,7 @@
 
     function pointNearHandleAllTools(eventData) {
         var toolData = cornerstoneTools.getToolState(eventData.element, toolType);
-        if (toolData === undefined) {
+        if (!toolData) {
             return;
         }
 
@@ -96,8 +96,6 @@
                 };
             }
         }
-
-        return; // Maybe this should return false?
     }
 
     // --- Drawing loop ---
@@ -127,7 +125,7 @@
 
     function mouseMoveCallback(e, eventData) {
         var toolData = cornerstoneTools.getToolState(eventData.element, toolType);
-        if (toolData === undefined) {
+        if (!toolData) {
             return;
         }
 
@@ -180,7 +178,7 @@
         var measurementData = {
             visible: true,
             active: true,
-            handles: [],
+            handles: []
         };
 
         var config = cornerstoneTools.freehand.getConfiguration();
@@ -195,7 +193,7 @@
 
     function endDrawing(eventData, handleNearby) {
         var toolData = cornerstoneTools.getToolState(eventData.element, toolType);
-        if (toolData === undefined) {
+        if (!toolData) {
             return;
         }
 
